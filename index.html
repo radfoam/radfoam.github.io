@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="">
+  <meta name="keywords" content="Radiant Foam, Ray tracing, Voronoi Volumes">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Radiant Foam</title>
+
+  <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+  <div id="content">
+    <h1>Radiant Foam</h1>
+    <h2>
+      <a href="https://shrisudhan.github.io/">Shrisudhan Govindarajan*</a><sup>1</sup>,
+      <a href="https://scholar.google.com/citations?user=h-qFKrQAAAAJ&hl=en">Daniel Rebain*</a><sup>2</sup>,
+      <a href="https://www.cs.ubc.ca/~kmyi/">Kwang Moo Yi</a><sup>2</sup>,
+      <a href="https://theialab.ca/">Andrea Tagliasacchi</a><sup>1,3,4</sup>
+    </h2>
+    <h3>
+      <span><sup>1</sup>Simon Fraser University,</span>
+      <span><sup>2</sup>University of British Columbia,</span>
+      <span><sup>3</sup>University of Toronto,</span>
+      <span><sup>4</sup>Google Deepmind</span>
+    </h3>
+    <h3>
+      * denotes equal contribution
+    </h3>
+
+    <div class="videobox">
+      <video width="100%" controls>
+        <source src="./radfoam.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+
+    <h2>
+      Code and paper coming soon!
+    </h2>
+
+    <div class="abstract">
+      <strong>Abstract:</strong>
+      <p>
+        Radiance fields have revolutionized the field of 3D understanding from images. Early in their history, NeRF
+        methods produced high quality models, but struggled to match the speeds required by computer graphics
+        applications. Recently, the field has embraced the use of models based on splatting, which take advantage of the
+        superior efficiency of rasterization, and achieve real-time speeds in inference. This arc of development mirrors
+        the history of real-time computer graphics itself. A broad space of rendering methods and representations of
+        geometry gave way to the uniform adoption of triangles and hardware rasterization, as these delivered the speeds
+        needed for interactive applications. However, as algorithms and hardware have evolved, various rendering
+        techniques based on ray tracing have once again become popular, as ray tracing allows for the natural expression
+        of many light transport phenomena which are difficult or impossible to produce with rasterization. In this
+        project, we aim to create similar opportunities for radiance fields by proposing a radiance field representation
+        which admits a ray tracing algorithm efficient enough to challenge rasterization.
+      </p>
+      <p>
+        Our method works by filling space with a polyhedral open-cell foam constructed from a learnable, adaptively
+        densified point set through the Voronoi diagram. By endowing each cell with the density and radiance properties
+        of a radiance field, we define a model which can be volumetrically rendered in a differentiable manner. The
+        process of rendering can then be accelerated by walking through the foam from cell to cell, crossing polyhedral
+        faces which intersect the ray. We show that this yields fast rendering (between 150-180 FPS on the Mip-NeRF 360
+        dataset), while supporting the full range of features one would expect from a ray tracer, such as non-pinhole
+        cameras and secondary reflection rays. We also completely avoid the dependence of competing real-time ray
+        tracing methods on dedicated ray tracing hardware, as our method can be implemented efficiently on any GPU with
+        modern programmable shading capabilities.
+      </p>
+    </div>
+  </div>
+</body>
+
+</html>
