@@ -57,7 +57,7 @@
         which admits a ray tracing algorithm efficient enough to challenge rasterization.
       </p>
       <p>
-        Our method works by filling space with a polyhedral open-cell foam constructed from a learnable, adaptively
+        Our method works by filling space with a polyhedral closed-cell foam constructed from a learnable, adaptively
         densified point set through the Voronoi diagram. By endowing each cell with the density and radiance properties
         of a radiance field, we define a model which can be volumetrically rendered in a differentiable manner. The
         process of rendering can then be accelerated by walking through the foam from cell to cell, crossing polyhedral
