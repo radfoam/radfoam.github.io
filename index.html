@@ -13,7 +13,7 @@
 
 <body>
   <div id="content">
-    <h1>Radiant Foam</h1>
+    <h1>Radiant Foam:<br><span class="subtitle">Real-Time Differentiable Ray Tracing</span></h1>
     <h2>
       <a href="https://shrisudhan.github.io/">Shrisudhan Govindarajan*</a><sup>1</sup>,
       <a href="https://scholar.google.com/citations?user=h-qFKrQAAAAJ&hl=en">Daniel Rebain*</a><sup>2</sup>,
@@ -37,36 +37,102 @@
       </video>
     </div>
 
-    <h2>
-      Code and paper coming soon!
-    </h2>
+    <div id="icons">
+      <div>
+        <svg width="32" height="32" viewbox="0 0 98 96" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" clip-rule="evenodd"
+            d="M48.854 0C21.839 0 0 22 0 49.217c0 21.756 13.993 40.172 33.405 46.69 2.427.49 3.316-1.059 3.316-2.362 0-1.141-.08-5.052-.08-9.127-13.59 2.934-16.42-5.867-16.42-5.867-2.184-5.704-5.42-7.17-5.42-7.17-4.448-3.015.324-3.015.324-3.015 4.934.326 7.523 5.052 7.523 5.052 4.367 7.496 11.404 5.378 14.235 4.074.404-3.178 1.699-5.378 3.074-6.6-10.839-1.141-22.243-5.378-22.243-24.283 0-5.378 1.94-9.778 5.014-13.2-.485-1.222-2.184-6.275.486-13.038 0 0 4.125-1.304 13.426 5.052a46.97 46.97 0 0 1 12.214-1.63c4.125 0 8.33.571 12.213 1.63 9.302-6.356 13.427-5.052 13.427-5.052 2.67 6.763.97 11.816.485 13.038 3.155 3.422 5.015 7.822 5.015 13.2 0 18.905-11.404 23.06-22.324 24.283 1.78 1.548 3.316 4.481 3.316 9.126 0 6.6-.08 11.897-.08 13.526 0 1.304.89 2.853 3.316 2.364 19.412-6.52 33.405-24.935 33.405-46.691C97.707 22 75.788 0 48.854 0z"
+            fill="#24292f" />
+        </svg><br>
+        <span class="link"><a href="https://github.com/theialab/radfoam">github</a></span>
+      </div>
+      <div>
+        <svg fill="#000000" width="32" height="32" viewBox="-8 0 26 26" version="1.1"
+          xmlns="http://www.w3.org/2000/svg">
+          <title>paper</title>
+          <path
+            d="M13.52 5.72h-7.4c-0.36 0-0.56 0.2-0.6 0.24l-5.28 5.28c-0.040 0.040-0.24 0.24-0.24 0.56v12.2c0 1.24 1 2.24 2.24 2.24h11.24c1.24 0 2.24-1 2.24-2.24v-16.040c0.040-1.24-0.96-2.24-2.2-2.24zM5.28 8.56v1.8c0 0.32-0.24 0.56-0.56 0.56h-1.84l2.4-2.36zM14.080 24.040c0 0.32-0.28 0.56-0.56 0.56h-11.28c-0.32 0-0.56-0.28-0.56-0.56v-11.36h3.040c1.24 0 2.24-1 2.24-2.24v-3.040h6.52c0.32 0 0.56 0.24 0.56 0.56l0.040 16.080z">
+          </path>
+        </svg><br>
+        <span class="link"><a href="https://arxiv.org/abs/2502.01157">paper</a></span>
+      </div>
+    </div>
 
-    <div class="abstract">
-      <strong id="abstract-title">Abstract:</strong>
+    <div class="paragraph">
+      <strong id="paragraph-title">Abstract</strong>
       <p>
-        Radiance fields have revolutionized the field of 3D understanding from images. Early in their history, NeRF
-        methods produced high quality models, but struggled to match the speeds required by computer graphics
-        applications. Recently, the field has embraced the use of models based on splatting, which take advantage of the
-        superior efficiency of rasterization, and achieve real-time speeds in inference. This arc of development mirrors
-        the history of real-time computer graphics itself. A broad space of rendering methods and representations of
-        geometry gave way to the uniform adoption of triangles and hardware rasterization, as these delivered the speeds
-        needed for interactive applications. However, as algorithms and hardware have evolved, various rendering
-        techniques based on ray tracing have once again become popular, as ray tracing allows for the natural expression
-        of many light transport phenomena which are difficult or impossible to produce with rasterization. In this
-        project, we aim to create similar opportunities for radiance fields by proposing a radiance field representation
-        which admits a ray tracing algorithm efficient enough to challenge rasterization.
+        Research on differentiable scene representations is consistently moving towards more efficient, real-time
+        models.
+        Recently, this has led to the popularization of splatting methods, which eschew the traditional ray-based
+        rendering of radiance fields in favor of rasterization.
+        This has yielded a significant improvement in rendering speeds due to the efficiency of rasterization algorithms
+        and hardware, but has come at a cost: the approximations that make rasterization efficient also make
+        implementation of light transport phenomena like reflection and refraction much more difficult.
+        We propose a novel scene representation which avoids these approximations, but keeps the efficiency and
+        reconstruction quality of splatting by leveraging a decades-old efficient volumetric mesh ray tracing algorithm
+        which has been largely overlooked in recent computer vision research.
+        The resulting model, which we name <em>Radiant Foam</em>, achieves rendering speed and quality comparable to
+        Gaussian Splatting, without the constraints of rasterization.
+        Unlike ray traced Gaussian models that use <em>hardware</em> ray tracing acceleration, our method requires no
+        special hardware or APIs beyond the standard features of a programmable GPU.
       </p>
+    </div>
+
+    <div class="paragraph">
+      <strong id="paragraph-title">Method</strong>
       <p>
-        Our method works by filling space with a polyhedral closed-cell foam constructed from a learnable, adaptively
-        densified point set through the Voronoi diagram. By endowing each cell with the density and radiance properties
-        of a radiance field, we define a model which can be volumetrically rendered in a differentiable manner. The
-        process of rendering can then be accelerated by walking through the foam from cell to cell, crossing polyhedral
-        faces which intersect the ray. We show that this yields fast rendering (between 150-180 FPS on the Mip-NeRF 360
-        dataset), while supporting the full range of features one would expect from a ray tracer, such as non-pinhole
-        cameras and secondary reflection rays. We also completely avoid the dependence of competing real-time ray
-        tracing methods on dedicated ray tracing hardware, as our method can be implemented efficiently on any GPU with
-        modern programmable shading capabilities.
+        Our representation is based on the Voronoi diagram (right), which divides space into cells based on proximity
+        to a set
+        of points called <em>sites</em>.
+        The Voronoi diagram is dual to the Delaunay triangulation (center), and by constructing a Delaunay triangulation
+        from a
+        learnable point set, we are able to maintain an adjacency structure that indicates which Voronoi cells are
+        neighbours.
       </p>
+      <div class="figure">
+        <img src="./img/dual_1.png" class="subfigure">
+        <img src="./img/dual_2.png" class="subfigure">
+        <img src="./img/dual_3.png" class="subfigure">
+      </div>
+      <p>
+        Using this adjacency structure, we can easily compute ray-cell intersections by iterating over the neighbours of
+        each cell and finding the nearest front-facing plane intersection.
+        By performing this process iteratively, we can efficiently trace rays through the foam, stepping from cell to
+        cell.
+        This algorithm is much more efficient than typical ray tracing acceleration methods that rely on hierarchical
+        acceleration structures with logarithmic query complexity.
+      </p>
+      <div class="figure">
+        <img src="./img/ray_tracing.png" class="subfigure">
+      </div>
+      <p>
+        Our method also avoids the challenges typically associated with optimizing a discrete mesh, as the cell
+        boundaries of the Voronoi diagram vary continuously with changes in the positions of sites.
+        This is due to the property of Voronoi diagrams that discrete changes in connectivity are effectively
+        <em>hidden</em> in zero-surface area faces, while other options like using the Delaunay mesh directly would lead
+        to large discontinuities in the field whenever connectivity changes.
+      </p>
+      <div class="figure">
+        <img src="./img/flip_1.png" class="subfigure">
+        <img src="./img/flip_2.png" class="subfigure">
+        <img src="./img/flip_3.png" class="subfigure">
+      </div>
+      <p>
+        The result is a flexible, differentiable model that can be ray traced in real time at speeds significantly
+        outperforming hardware-accelerated Gaussian ray tracing, while nearly matching the reconstruction quality of
+        Gaussian splatting methods.
+      </p>
+
+      <strong id="paragraph-title">BibTeX</strong>
+      <br><br>
+      <code>
+@article{govindarajan2025radfoam,<br>
+&nbsp;&nbsp;&nbsp;&nbsp; author = {Govindarajan, Shrisudhan and Rebain, Daniel and Yi, Kwang Moo and Tagliasacchi, Andrea},<br>
+&nbsp;&nbsp;&nbsp;&nbsp; title = {Radiant Foam: Real-Time Differentiable Ray Tracing},<br>
+&nbsp;&nbsp;&nbsp;&nbsp; journal = {arXiv:2502.01157},<br>
+&nbsp;&nbsp;&nbsp;&nbsp; year = {2025},<br>
+}
+        </code>
     </div>
   </div>
 </body>
