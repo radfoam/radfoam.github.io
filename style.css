@@ -69,7 +69,6 @@ video {
     font-size: calc(4 * min(0.4rem, 1vw));
     font-weight: lighter;
     padding: calc(min(1vw, 40px));
-    max-width: 1120px;
 }
 
 #paragraph-title {
@@ -78,7 +77,6 @@ video {
 
 .figure {
     padding: calc(min(1vw, 40px));
-    max-width: 1120px;
     display: flex;
     justify-content: center;
     gap: calc(min(1vw, 40px));
