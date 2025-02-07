@@ -52,10 +52,13 @@ a {
     justify-content: center;
 }
 
-.videobox {
-    background-color: #f0f0f0;
+.resultbox {
     padding: calc(min(1vw, 40px));
     object-fit: contain;
+}
+
+.result {
+    box-shadow: 0px 0px calc(min(1vw, 40px) / 1) calc(min(1vw, 40px) / 1) #e7e7e7;
 }
 
 video {
